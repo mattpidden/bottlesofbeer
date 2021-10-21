@@ -7,7 +7,7 @@ import (
 //	"net"
 	"time"
 	"math/rand"
-//	"secretstrings/stubs"
+//	"uk.ac.bris.cs/distributed2/secretstrings/stubs"
 //	"net/rpc"
 )
 
