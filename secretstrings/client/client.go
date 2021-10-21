@@ -4,7 +4,7 @@ import (
 	"flag"
 //	"bufio"
 //	"os"
-//	"secretstrings/stubs"
+//	"uk.ac.bris.cs/distributed2/secretstrings/stubs"
 	"fmt"
 )
 
