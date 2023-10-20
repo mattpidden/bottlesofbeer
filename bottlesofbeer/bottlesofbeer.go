@@ -44,12 +44,12 @@ func main(){
 	listener, _ := net.Listen("tcp", ":"+*thisPort)
 	defer listener.Close()
 
+	//sleep 20 seconds to allow all the process to begin their listening function
+	time.Sleep(20 * time.Second)
+
 	//set up connection with next process
 	client, _ := rpc.Dial("tcp", nextAddr)
 	defer client.Close()
-
-	//sleep 20 seconds to allow all the process to begin their listening function
-	time.Sleep(20 * time.Second)
 
 
 	//chcek if process given starting number of bottles
