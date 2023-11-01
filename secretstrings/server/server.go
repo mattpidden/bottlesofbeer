@@ -3,6 +3,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"math/rand"
 	"net"
 	"net/rpc"
@@ -27,7 +28,9 @@ func ReverseString(s string, i int) string {
     return string(runes)
 }
 
-type SecretStringOperations struct {}
+type SecretStringOperations struct {
+	ResultChannel chan string
+}
 
 func (s *SecretStringOperations) Reverse(req stubs.Request, res *stubs.Response) (err error) {
 	res.Message = ReverseString(req.Message, 10)
@@ -36,6 +39,7 @@ func (s *SecretStringOperations) Reverse(req stubs.Request, res *stubs.Response)
 
 func (s *SecretStringOperations) FastReverse(req stubs.Request, res *stubs.Response) (err error) {
 	res.Message = ReverseString(req.Message, 2)
+	s.ResultChannel <- req.Message
 	return
 }
 
@@ -43,7 +47,17 @@ func main() {
 	pAddr := flag.String("port", "8030", "Port to listen on")
 	flag.Parse()
 	rand.Seed(time.Now().UnixNano())
-	rpc.Register(&SecretStringOperations{})
+	resultChannel := make(chan string)
+	rpc.Register(&SecretStringOperations{ResultChannel: resultChannel})
+
+	go func() {
+		for {
+			result := <-resultChannel
+			fmt.Println(result)
+			// Do something with the result here
+		}
+	}()
+
 	listener, _ := net.Listen("tcp", ":"+*pAddr)
 	defer listener.Close()
 	rpc.Accept(listener)

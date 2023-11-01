@@ -25,10 +25,10 @@ var nextAddr string
 func Singing(numberofbottles int) {
 	stringBottles := strconv.Itoa(numberofbottles)
 	response := ""
-	if (numberofbottles == 1) {
-		response = stringBottles + " bottles of beer on the wall, " + stringBottles + " bottles of beer. Take one down, and there's none left..."
+	if numberofbottles == 1 {
+		response = stringBottles + " bottles of beer on the wall, " + stringBottles + " bottles of beer. Take one down, and pass it around, no more bottles of beer on the wall!"
 	} else {
-		response = stringBottles + " bottles of beer on the wall, " + stringBottles + " bottles of beer. Take one down, and pass it on..."
+		response = stringBottles + " bottles of beer on the wall, " + stringBottles + " bottles of beer. Take one down, pass it around, " + strconv.Itoa(numberofbottles - 1) + " bottles of beer on the wall..."
 	}
 	fmt.Println(response)
 }
@@ -68,7 +68,7 @@ func main(){
 	defer client.Close()
 
 	//check if process given starting number of bottles
-	if (*bottles != 0) {
+	if *bottles != 0 {
 		fmt.Println("This is the starting instance")
 
 		//then tell next process to sing a line
@@ -91,7 +91,7 @@ func main(){
 			}
 
 			// Give the song rhythm
-			time.Sleep(100 * time.Millisecond)
+			time.Sleep(5000 * time.Millisecond)
 
 			//Tell the next instance to sing a line
 			request := stubs.Request{Bottles: leftoverBottles}
