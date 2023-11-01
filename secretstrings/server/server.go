@@ -38,7 +38,7 @@ func (s *SecretStringOperations) Reverse(req stubs.Request, res *stubs.Response)
 
 func (s *SecretStringOperations) FastReverse(req stubs.Request, res *stubs.Response) (err error) {
 	res.Message = ReverseString(req.Message, 2)
-	s.ResultChannel <- req.Message
+	//s.ResultChannel <- req.Message
 	return
 }
 
@@ -58,6 +58,7 @@ func main() {
 		}
 	}()
 	*/
+
 	listener, _ := net.Listen("tcp", ":"+*pAddr)
 	defer listener.Close()
 	rpc.Accept(listener)
