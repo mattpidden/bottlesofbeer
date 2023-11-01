@@ -3,7 +3,6 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"math/rand"
 	"net"
 	"net/rpc"
@@ -50,6 +49,7 @@ func main() {
 	resultChannel := make(chan string)
 	rpc.Register(&SecretStringOperations{ResultChannel: resultChannel})
 
+	/*
 	go func() {
 		for {
 			result := <-resultChannel
@@ -57,7 +57,7 @@ func main() {
 			// Do something with the result here
 		}
 	}()
-
+	*/
 	listener, _ := net.Listen("tcp", ":"+*pAddr)
 	defer listener.Close()
 	rpc.Accept(listener)
